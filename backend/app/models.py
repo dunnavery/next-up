@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP
-from app.database.database import Base
+from database import Base
 from datetime import datetime, timezone
 
 class Book(Base):
