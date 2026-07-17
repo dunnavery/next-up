@@ -7,9 +7,9 @@ interface BookCardProps {
 
 export default function BookCard({ title, author, rating }: BookCardProps) {
     return (
-        <div>
-            <h1>{title}</h1>
-            <h2>{author}</h2>
+        <div className="p-4 m-2 w-full">
+            <p className="font-bold">{title}</p>
+            <p>{author}</p>
             <p>Rating: {rating}</p>
         </div>
     );
