@@ -5,12 +5,16 @@ interface BookCardProps {
     rating: number;
 }
 
-export default function BookCard({ title, author, rating }: BookCardProps) {
+export default function BookCard({ books }: { books: BookCardProps[] }) {
     return (
         <div className="p-4 m-2 w-full">
-            <p className="font-bold">{title}</p>
-            <p>{author}</p>
-            <p>Rating: {rating}</p>
+            {books.map((book: BookCardProps) => (
+                <div key={book.title} className="p-4 m-2 border rounded shadow">
+                    <h2 className="text-xl font-bold">{book.title}</h2>
+                    <p className="text-gray-600">by {book.author}</p>
+                    <p className="text-yellow-500">Rating: {book.rating}</p>
+                </div>
+            ))}
         </div>
     );
 }
