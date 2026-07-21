@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -10,8 +11,25 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+origins = [
+	"http://localhost:3000",  # React frontend
+]
+
+app.add_middleware(
+	CORSMiddleware,
+	allow_origins=origins,
+	allow_credentials=True,
+	allow_methods=["*"],
+	allow_headers=["*"],
+)
+
+@app.get("/")
+def read_root():
+	return {"message": "Welcome to the Book API!"}
+
+
 # POST endpoint to create a book
-@app.post("/books/", response_model=schemas.BookResponse, status_code=status.HTTP_201_CREATED)
+@app.post("/books", response_model=schemas.BookResponse, status_code=status.HTTP_201_CREATED)
 def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
 	db_book = db.query(models.Book).filter(models.Book.title == book.title).first()
 	if db_book:
@@ -29,8 +47,9 @@ def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
 	db.refresh(new_book)  # Refreshes object to get the generated ID
 	return new_book
 
-# GET endpoint to fetch all users
-@app.get("/books/", response_model=List[schemas.BookResponse])
+
+# GET endpoint to fetch all books
+@app.get("/books", response_model=List[schemas.BookResponse])
 def read_books(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 	books = db.query(models.Book).offset(skip).limit(limit).all()
 	return books

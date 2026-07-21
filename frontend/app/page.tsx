@@ -1,13 +1,19 @@
+'use client';
+
 import BookCard from "@/components/BookCard";
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const books = [
-      { title: "To Kill a Mockingbird", author: "Harper Lee", rating: 4.8 },
-      { title: "1984", author: "George Orwell", rating: 4.7 },
-      { title: "The Great Gatsby", author: "F. Scott Fitzgerald", rating: 4.6 },
-      { title: "Pride and Prejudice", author: "Jane Austen", rating: 4.5 },
-      { title: "The Catcher in the Rye", author: "J.D. Salinger", rating: 4.4 },
-  ]
+  const [backendData, setBackendData] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/books')
+    .then(response => response.json())
+    .then(data => setBackendData(data))
+    .catch(error => console.error("Error:", error));
+  }, []);
+
+  const books = backendData || [];
 
   return (
     <main>
