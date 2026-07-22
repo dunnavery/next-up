@@ -19,7 +19,7 @@ export default function Home() {
     <main>
       <div className="mx-auto flex items-center">
         <div>
-          <h1 className="p-4 m-2 text-2xl font-bold">Books</h1>
+          <h1 className="p-4 m-2 text-2xl font-bold border rounded shadow">Books</h1>
           <BookCard books={books} />
         </div>
       </div>

@@ -14,3 +14,10 @@ In development
 - [ ] Ratings
 - [ ] AI recommendations
 - [ ] Personalized suggestions
+
+# Backend
+
+FastAPI + PostgreSQL
+
+`docker compose up -d`
+`npm run dev`

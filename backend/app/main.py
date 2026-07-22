@@ -6,10 +6,14 @@ from typing import List
 import models
 import schemas
 from database import engine, get_db
+from .routers import books, users
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.include_router(books.router)
+app.include_router(users.router)
 
 origins = [
 	"http://localhost:3000",  # React frontend
@@ -24,8 +28,8 @@ app.add_middleware(
 )
 
 @app.get("/")
-def read_root():
-	return {"message": "Welcome to the Book API!"}
+def root():
+	return {"message": "Welcome to the Book Management API!"}
 
 
 # POST endpoint to create a book
